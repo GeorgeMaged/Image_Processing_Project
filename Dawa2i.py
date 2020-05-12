@@ -131,6 +131,36 @@ def import_image():
 	
 # Function to add new Drug to Database
 def open_new_drug_window():
+    
+    
+    # When the submit_btn is clicked this function is executed to add the new record to the database
+    def submit():
+        # DATABASE
+        # Connect to the database
+        conn = sqlite3.connect('Medicine_DB')
+
+        # Create cursor
+        c = conn.cursor()
+
+        # Insertion query
+        c.execute("INSERT INTO Medicine VALUES (:Name, :Times)",
+                  {
+                      'Name': drug_name_box.get(),
+                      'Times': drug_times.get()
+                  })
+
+        # Commit changes
+        conn.commit()
+
+        # Close connection
+        conn.close()
+
+        # list_times = drug_times.get().split()
+        # print(drug_times.get())
+        # print(list_times)
+
+        drug_name_box.delete(0, END)
+        drug_times.delete(0, END)
         
     # Creating the new drug window
     top = Toplevel()
