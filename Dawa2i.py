@@ -114,3 +114,17 @@ def extract_text():
         play_audio(to_speak)
         open_new_drug_window()
 
+# Function of button to import image and then call function of extracting text
+def import_image():
+    global my_image
+    global image
+    root.filename = filedialog.askopenfilename(initialdir="c:/", title="select a file",
+                                               filetypes=[("Png Files", ".png"), ("jpg Files", ".jpg"),
+                                                          ("jpeg Files", "*.jpeg")])
+    # my_label = Label(root, text=root.filename).pack()
+    my_image = ImageTk.PhotoImage(Image.open(root.filename))
+    image = imageio.imread(root.filename)
+    my_image_label = Label(image=my_image)
+    my_image_label.grid(row=2, column=0, padx=100, pady=50)
+
+    extract_text()
