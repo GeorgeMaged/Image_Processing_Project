@@ -1,4 +1,4 @@
-# Image_Processing_Project
+# Team 42
 
 ## Team Members: 
 
