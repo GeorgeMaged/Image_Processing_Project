@@ -128,3 +128,65 @@ def import_image():
     my_image_label.grid(row=2, column=0, padx=100, pady=50)
 
     extract_text()
+	
+# Function to add new Drug to Database
+def open_new_drug_window():
+        # DATABASE
+        # Connect to the database
+        conn = sqlite3.connect('Medicine_DB')
+
+        # Create cursor
+        c = conn.cursor()
+
+        # Insertion query
+        c.execute("INSERT INTO Medicine VALUES (:Name, :Times)",
+                  {
+                      'Name': drug_name_box.get(),
+                      'Times': drug_times.get()
+                  })
+
+        # Commit changes
+        conn.commit()
+
+        # Close connection
+        conn.close()
+
+        # list_times = drug_times.get().split()
+        # print(drug_times.get())
+        # print(list_times)
+
+        drug_name_box.delete(0, END)
+        drug_times.delete(0, END)
+
+    # Creating the new drug window
+    top = Toplevel()
+    top.title('Add New Drug')
+    top.geometry("500x500")
+
+    # Defining labels and buttons for the new drug window
+    drug_name_label = Label(top, text="Drug Name: ")
+    drug_name_box = Entry(top)
+    drug_times_label = Label(top, text="Times To Be Taken: ")
+    drug_times = Entry(top)
+    hint_label = Label(top, text="Example: \"12PM 1AM 2PM\" ")
+    submit_btn = Button(top, text="Add record to Database", command=submit)
+    quit_btn = Button(top, text="Quit", command=top.destroy)
+
+    # Placing them in a grid system in the new drug window
+    drug_name_label.grid(row=0, column=0, pady=5)
+    drug_name_box.grid(row=0, column=1, pady=5)
+    drug_times_label.grid(row=1, column=0, pady=5)
+    drug_times.grid(row=1, column=1, pady=5)
+    hint_label.grid(row=2, column=1, pady=5)
+    submit_btn.grid(row=3, column=1, pady=5)
+    quit_btn.grid(row=4, column=1, pady=10)
+
+
+# Defining the button that imports the image of a medicine to process it
+import_btn = Button(root, text="Import Image", style='TButton', command=import_image).grid(row=0, column=0, padx=350,
+                                                                                           pady=5)
+
+# Defining a button to add new medicine if it is not saved in the database
+add_new_drug_btn = Button(root, text="Add New Drug", command=open_new_drug_window).grid(row=1, column=0)
+
+root.mainloop()	
